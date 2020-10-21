@@ -686,9 +686,9 @@ static bool GPXCreateWpt( pugi::xml_node node, RoutePoint *pr, unsigned int flag
     pugi::xml_node child;
     pugi::xml_attribute attr;
     
-    s.Printf(_T("%.9f"), pr->m_lat);
+    s = wxString::FromCDouble(pr->m_lat, 9);
     node.append_attribute("lat") = s.mb_str();
-    s.Printf(_T("%.9f"), pr->m_lon);
+    s = wxString::FromCDouble(pr->m_lon, 9);
     node.append_attribute("lon") = s.mb_str();
  
     if(flags & OUT_TIME) {
@@ -793,7 +793,7 @@ static bool GPXCreateWpt( pugi::xml_node node, RoutePoint *pr, unsigned int flag
          }
         if(flags & OUT_ARRIVAL_RADIUS) {
             child = child_ext.append_child("opencpn:arrival_radius");
-            s.Printf(_T("%.3f"), pr->GetWaypointArrivalRadius());
+            s = wxString::FromCDouble(pr->GetWaypointArrivalRadius(), 3);
             child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         }
         if(flags & OUT_WAYPOINT_RANGE_RINGS) {
@@ -844,9 +844,9 @@ static bool GPXCreateTrkpt( pugi::xml_node node, TrackPoint *pt, unsigned int fl
     pugi::xml_node child;
     pugi::xml_attribute attr;
     
-    s.Printf(_T("%.9f"), pt->m_lat);
+    s = wxString::FromCDouble(pt->m_lat, 9);
     node.append_attribute("lat") = s.mb_str();
-    s.Printf(_T("%.9f"), pt->m_lon);
+    s = wxString::FromCDouble(pt->m_lon, 9);
     node.append_attribute("lon") = s.mb_str();
  
     if(flags & OUT_TIME) {
@@ -1056,7 +1056,7 @@ static bool GPXCreateRoute( pugi::xml_node node, Route *pRoute )
     if( pRoute->m_PlannedSpeed != ROUTE_DEFAULT_SPEED ) {
         child = child_ext.append_child("opencpn:planned_speed");
         wxString s;
-        s.Printf(_T("%.2f"), pRoute->m_PlannedSpeed);
+        s = wxString::FromCDouble(pRoute->m_PlannedSpeed, 2);
         child.append_child(pugi::node_pcdata).set_value(s.mb_str());
     }
     
